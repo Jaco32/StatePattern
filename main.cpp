@@ -14,10 +14,7 @@ public:
 	StanPompyPaliwa(PompaPaliwa* p) : pompa(p) {}
 	virtual void rob_swoje() = 0;
 	virtual ~StanPompyPaliwa() {}
-	static short cisnienie;
 };
-
-static StanPompyPaliwa::cisnienie = 0;
 
 class PompaPaliwaWylaczona: public StanPompyPaliwa {
 public:
@@ -48,7 +45,7 @@ private:
 public:
 	PompaPaliwa() : stan_pompy_paliwa(new PompaPaliwaWylaczona),
                     cisnienie(0) {}
-					
+
 	void zasil();
 	
 	void wlacz();
@@ -63,20 +60,16 @@ public:
 
 class PompaPaliwaCisnienie: public StanPompyPaliwa {
 public:
-	PompaPaliwaCisnienie(PompaPaliwa* p) : StanPompyPaliwa(p) {
-		rob_swoje();
-	}
+	PompaPaliwaCisnienie(PompaPaliwa* p) : StanPompyPaliwa(p) { }
 
 	void rob_swoje() {
-		if(!cisnienie) {
-			StanPompyPaliwa::cisnienie = 50;
-			pompa->cisnienie = StanPompyPaliwa::cisnienie;
+		if(!pompa->cisnienie) {
+			pompa->cisnienie = 50;
 			cout << "Pompa paliwa buduje cisnienie" << endl;
 		}
 		else {
 			cout << "Pompa paliwa zeruje cisnienie" << endl;
-			cisnienie = 0;
-			pompa->cisnienie = StanPompyPaliwa::cisnienie;
+			pompa->cisnienie = 0;
 			pompa->stare_stany.push_back(this);
 			pompa->stan_pompy_paliwa = new PompaPaliwaWylaczona;
 		}
@@ -91,6 +84,7 @@ public:
 		cout << "Pompa paliwa zasilona" << endl;
 		pompa->stare_stany.push_back(this);
 		pompa->stan_pompy_paliwa = new PompaPaliwaCisnienie(pompa);
+		pompa->stan_pompy_paliwa->rob_swoje();
 	}
 };
 
@@ -121,6 +115,7 @@ void PompaPaliwa::wlacz() {
 void PompaPaliwa::odetnij() {
 	stare_stany.push_back(stan_pompy_paliwa);
 	stan_pompy_paliwa = new PompaPaliwaCisnienie(this);
+	stan_pompy_paliwa->rob_swoje();
 }
 
 int main()
