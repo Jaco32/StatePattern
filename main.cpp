@@ -101,6 +101,7 @@ public:
 
 // stany nie sa ustawiane z zewnatrz bezposrednio
 // klasa moze je zmieniac wewnetrznie pod wplywem zewnetrznych akcji
+// Test change comment
 void PompaPaliwa::zasil() {
 	stare_stany.push_back(stan_pompy_paliwa);
 	stan_pompy_paliwa = new PompaPaliwaZasilona(this);
