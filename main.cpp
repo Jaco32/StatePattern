@@ -99,8 +99,8 @@ public:
 	}
 };
 
-// stany nie są ustawiane z zewnątrz bezpośrednio
-// klasa może je zmieniać wewnętrznie pod wpływem zewnętrznych akcji
+// stany nie sa ustawiane z zewnatrz bezposrednio
+// klasa moze je zmieniac wewnetrznie pod wplywem zewnetrznych akcji
 void PompaPaliwa::zasil() {
 	stare_stany.push_back(stan_pompy_paliwa);
 	stan_pompy_paliwa = new PompaPaliwaZasilona(this);
